@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Metronome</string>
+    <string name="minus_button">-</string>
+    <string name="plus_button">+</string>
+    <string name="mute_button">Mute</string>
+    <string name="mute_button_on">ON</string>
+    <string name="mute_button_off">MUTE</string>
+    <string name="accent_switch">Accent</string>
+    <string name="bpm">bpm</string>
+</resources>
