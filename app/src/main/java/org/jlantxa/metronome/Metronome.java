@@ -70,8 +70,9 @@ class Metronome implements Runnable
     }
 
     private void makeSilence() {
-        int accentSilenceLength = (int) (((60.0 / bpm) * sampleRate) - accentBeatSamples.length);
-        int plainSilenceLength = (int) (((60.0 / bpm) * sampleRate) - plainBeatSamples.length);
+        // The tick arrays have two bytes per audio sample
+        int accentSilenceLength = (int) (((60.0 / bpm) * sampleRate) - accentBeatSamples.length/2);
+        int plainSilenceLength = (int) (((60.0 / bpm) * sampleRate) - plainBeatSamples.length/2);
 
         accentBeatSilenceSamples = new double[accentSilenceLength];
         for (int i = 0; i < accentSilenceLength; i++) {
