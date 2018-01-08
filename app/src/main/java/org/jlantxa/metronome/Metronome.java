@@ -19,10 +19,10 @@ class Metronome implements Runnable
 
     private final byte[] accentBeatSamples;
     private final byte[] plainBeatSamples;
-    private double[] accentBeatSilenceSamples;
-    private double[] plainBeatSilenceSamples;
+    private byte[] accentBeatSilenceSamples;
+    private byte[] plainBeatSilenceSamples;
 
-    Metronome(int sampleRate, byte[] accentBeatSamples, byte[] plainBeatSamples) {
+    public Metronome(int sampleRate, byte[] accentBeatSamples, byte[] plainBeatSamples) {
         this.sampleRate = sampleRate;
         this.accentBeatSamples = accentBeatSamples;
         this.plainBeatSamples = plainBeatSamples;
@@ -71,18 +71,16 @@ class Metronome implements Runnable
 
     private void makeSilence() {
         // The tick arrays have two bytes per audio sample
-        int accentSilenceLength = (int) (((60.0 / bpm) * sampleRate) - accentBeatSamples.length/2);
-        int plainSilenceLength = (int) (((60.0 / bpm) * sampleRate) - plainBeatSamples.length/2);
+        int accentSilenceLength = 2 *(int) (((60.0 / bpm) * sampleRate) - accentBeatSamples.length/2);
+        int plainSilenceLength = 2 * (int) (((60.0 / bpm) * sampleRate) - plainBeatSamples.length/2);
 
-        accentBeatSilenceSamples = new double[accentSilenceLength];
-        for (int i = 0; i < accentSilenceLength; i++) {
-            accentBeatSilenceSamples[i] = 0;
-        }
+        // New array is initialised to zeros
+        accentBeatSilenceSamples = new byte[accentSilenceLength];
+        //Arrays.fill(accentBeatSilenceSamples, (byte) 0);
 
-        plainBeatSilenceSamples = new double[plainSilenceLength];
-        for (int i = 0; i < plainSilenceLength; i++) {
-            plainBeatSilenceSamples[i] = 0;
-        }
+        // New array is initialised to zeros
+        plainBeatSilenceSamples = new byte[plainSilenceLength];
+        //Arrays.fill(plainBeatSilenceSamples, (byte) 0);
     }
 
     public void run() {
@@ -121,17 +119,5 @@ class Metronome implements Runnable
 
     private void writeToTrack(byte[] pcm16Samples) {
         audioTrack.write(pcm16Samples, 0, pcm16Samples.length);
-    }
-
-    private void writeToTrack(double[] samples) {
-        byte[] pcmSamples = new byte[2*samples.length];
-        int index = 0;
-        for (double sample : samples) {
-            short maxSample = (short) ((sample * Short.MAX_VALUE));
-            pcmSamples[index++] = (byte) (maxSample & 0x00ff);
-            pcmSamples[index++] = (byte) ((maxSample & 0xff00) >>> 8);
-        }
-
-        audioTrack.write(pcmSamples, 0, pcmSamples.length);
     }
 }

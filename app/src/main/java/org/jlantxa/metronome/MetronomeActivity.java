@@ -66,8 +66,8 @@ public class MetronomeActivity extends Activity
         byte[] accentSignal = new byte[0];
         byte[] beatSignal = new byte[0];
         try {
-            accentSignal = getPCMBytesFromInputStream(tickFileIS);
-            beatSignal = getPCMBytesFromInputStream(tockFileIS);
+            accentSignal = getPCMBytesFromInputStream(48000, tickFileIS);
+            beatSignal = getPCMBytesFromInputStream(48000, tockFileIS);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -201,11 +201,11 @@ public class MetronomeActivity extends Activity
         bpmSeekBar.setProgress(bpm - BPM_MIN);
     }
 
-    private byte[] getPCMBytesFromInputStream(InputStream inStream) throws IOException {
+    private byte[] getPCMBytesFromInputStream(int sampleRate, InputStream inStream) throws IOException {
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();
 
         int nRead;
-        byte[] data = new byte[16384];
+        byte[] data = new byte[(int)(0.5 * 2*sampleRate)]; // Can store 0.5 seconds of signal
 
         while ((nRead = inStream.read(data, 0, data.length)) != -1) {
             buffer.write(data, 0, nRead);
