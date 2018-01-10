@@ -1,1 +1,1 @@
-[{"outputType":{"type":"APK"},"apkInfo":{"type":"MAIN","splits":[],"versionCode":2,"versionName":"1.0-b2","enabled":true,"outputFile":"app-release.apk"},"path":"app-release.apk","properties":{"packageId":"org.jlantxa.metronome","split":"","minSdkVersion":"21"}}]
+[{"outputType":{"type":"APK"},"apkInfo":{"type":"MAIN","splits":[],"versionCode":3,"versionName":"1.0","enabled":true,"outputFile":"app-release.apk"},"path":"app-release.apk","properties":{"packageId":"org.jlantxa.metronome","split":"","minSdkVersion":"21"}}]

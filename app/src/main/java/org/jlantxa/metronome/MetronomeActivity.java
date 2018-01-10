@@ -143,8 +143,12 @@ public class MetronomeActivity extends Activity
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
+    protected void onDestroy() {
+        super.onDestroy();
+        shutDown();
+    }
+
+    protected void shutDown() {
         metronome.setRunning(false);
         muteButton.setChecked(false);
     }
